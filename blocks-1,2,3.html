@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="container pt-5" id="app" v-cloak>
+    <div class="card mb-5">
+        <div class="form-control">
+            <input type="text"
+                   @keyup.enter="addItemArchive"
+                   ref="itemArchive"
+            >
+            <!--input type="text"
+                   v-model="valueItemArchive"
+                   @keyup.enter="addItemArchive"
+            -->
+        </div>
+
+        <ul class="list" v-if="numberItems.length">
+            <li
+                    class="list__item"
+                    v-for="(item, i) in numberItems"
+                    :key="item"
+                    @click.right.prevent="remove(i), log(item)"
+            >
+                ({{ i }}). {{ item }}
+                <input type="text" @click.stop>
+            </li>
+        </ul>
+
+        <div v-show="numberItems.length === 0">
+            в архиве не осталось карточек с цифрами
+        </div>
+
+        <hr>
+
+        <ul class="list">
+            <li class="list__item" v-for="(value, key) in person">
+                {{ key }}: {{ value }}
+            </li>
+        </ul>
+
+        <hr>
+
+        <ul class="list">
+            <li class="list__item" v-for="(item, i) in 7">
+                {{ i }}. Item number {{ item }}
+            </li>
+        </ul>
+    </div>
+
+    <div class="card mb-5">
+        <h3>{{ exampleTitle }}</h3>
+        <h3 v-text="exampleTitle"></h3>
+        <div v-html="exampleHtmlTitle"></div>
+        <div>{{ exampleHtmlTitle }}</div>
+        <h3 v-once>Этот заголовок v-once {{ exampleTitle }}</h3>
+
+        <hr>
+
+        <button class="btn primary" @click="exampleTitle = 'НОВЫЙ'">Изменить заголовок</button>
+    </div>
+
+    <div class="card mb-5">
+        <p>
+            <label for="list-notes" :style="{color: inputValue.length > 3 ? 'blue' : 'red'}">
+                Список заметок
+            </label>
+        </p>
+
+        <div class="form-control">
+            <input type="text" id="list-notes"
+                   :placeholder="placeholderString"
+                   v-model="inputValue"
+                   @input="inputChangeHandler"
+                   @keyup.enter="addNewNote"
+            />
+        </div>
+
+        <button class="btn" v-on:click="addNewNote">Добавить</button>
+
+        <hr>
+
+        <ul class="list" v-if="notes.length !== 0">
+            <li class="list__item" v-for="(note, index) in notes">
+                {{ toUppercase(note) }}
+                <button class="btn danger" v-on:click="removeCurrentNote(index)">убрать</button>
+            </li>
+
+            <li>
+                <hr>
+                Общее количество заметок: {{ notes.length }}
+                Умноженное на два: {{ doubleCount }}
+            </li>
+        </ul>
+
+        <div v-else>Заметок нет</div>
+    </div>
+
+    <div class="card center">
+        <h2>Счетчик {{ counter }}</h2>
+
+        <div>
+            <button class="btn primary" v-on:click="counter++">Добавить</button>
+            <button class="btn danger" v-on:click="counter --">Убавить</button>
+        </div>
+    </div>
+</div>
+
+<script src="vue.global.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
