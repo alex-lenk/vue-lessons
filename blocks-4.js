@@ -10,7 +10,7 @@ const App = Vue.createApp({
     methods: {
         changeTitle() {
             console.log(this)
-            this.title = 'Изменненый текст'
+            this.title = 'Измененный текст'
         }
     },
     /*    template: `

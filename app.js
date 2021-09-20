@@ -34,6 +34,8 @@ const App = Vue.createApp({
       // начать заново
     },
     nextOfFinish() {
+      this.activeIndex = this.activeIndex + 1
+      console.log(this.currentStep)
       // кнопка вперед или закончить
     },
     setActive(idx) {
@@ -43,9 +45,14 @@ const App = Vue.createApp({
   computed: {
     // тут стоит определить несколько свойств:
     // 1. текущий выбранный шаг
+    currentStep() {
+      return this.activeIndex >= 0 ? 'active' : 'done' //this.activeIndex = this.activeIndex > 0
+    }
     // 2. выключена ли кнопка назад
     // 3. находимся ли мы на последнем шаге
   }
 });
 
+
 App.mount('#app')
+

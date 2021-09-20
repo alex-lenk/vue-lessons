@@ -23,10 +23,18 @@
             </div>
 
             <ul class="steps-list">
-                <li class="steps-item done">
-                    <span>1</span> Шаг 1
+                <li :class="currentStep" v-for="(step, idx) in steps">
+                    <span>{{ idx + 1 }}</span> {{ step.title }}
+                    {{ activeIndex }}
                 </li>
-                <li class="steps-item done">
+                <!--li :class="{
+                'steps-item': true,
+                 'active': idx === activeIndex
+                }" v-for="(step, idx) in steps">
+                    <span>{{ idx + 1 }}</span> {{ step.title }}
+                    {{ activeIndex }}
+                </li-->
+<!--                <li class="steps-item done">
                     <span>2</span> Шаг 2
                 </li>
                 <li class="steps-item active">
@@ -34,12 +42,12 @@
                 </li>
                 <li class="steps-item">
                     <span>4</span> Шаг 4
-                </li>
+                </li>-->
             </ul>
 
             <div>
-                <button class="btn" @click="nextOfFinish">Назад</button>
-                <button class="btn primary">Вперед</button>
+                <button class="btn">Назад</button>
+                <button class="btn primary" v-on:click="nextOfFinish">Вперед</button>
             </div>
         </div>
     </div>
