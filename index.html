@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue Basics</title>
+    <title>Основы Vue</title>
     <link rel="stylesheet" href="theme.css">
+    <link rel="icon" href="logo.png">
     <style>
         [v-cloak] {
             display: none;
@@ -12,7 +13,37 @@
     </style>
 </head>
 <body>
-<div class="container pt-5" id="app" v-cloak></div>
+<div class="container" id="app" v-cloak>
+    <div class="card">
+        <h1>План по изучению Vue.js</h1>
+
+        <div class="steps">
+            <div class="steps-content">
+                Сюда необходимо вывести текст активного шага по его индексу
+            </div>
+
+            <ul class="steps-list">
+                <li class="steps-item done">
+                    <span>1</span> Шаг 1
+                </li>
+                <li class="steps-item done">
+                    <span>2</span> Шаг 2
+                </li>
+                <li class="steps-item active">
+                    <span>3</span> Шаг 3
+                </li>
+                <li class="steps-item">
+                    <span>4</span> Шаг 4
+                </li>
+            </ul>
+
+            <div>
+                <button class="btn" @click="nextOfFinish">Назад</button>
+                <button class="btn primary">Вперед</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="vue.global.js"></script>
 <script src="app.js"></script>
