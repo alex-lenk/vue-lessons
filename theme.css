@@ -194,22 +194,24 @@ h3 {
     justify-content: space-between;
 }
 
-.steps-item__num {
+.steps-item::before {
+    margin-right: 5px;
     cursor: pointer;
     border-radius: 50%;
     padding: .75rem 1rem;
     font-size: .75rem;
     background-color: #42b983;
-    color: #fff;
-}
-
-.steps-item.active ~ .steps-item .steps-item__num {
-    background-color: #ccc;
     color: #333;
+    content: attr(data-step);
 }
 
-.steps-item.active .steps-item__num {
+.steps-item.active ~ .steps-item::before {
+    background-color: #ccc;
+}
+
+.steps-item.active::before {
     font-weight: bold;
+    color: #fff;
 }
 
 .steps-content {
