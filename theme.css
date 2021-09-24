@@ -194,24 +194,24 @@ h3 {
     justify-content: space-between;
 }
 
-.steps-item span {
+.steps-item__num {
     cursor: pointer;
     border-radius: 50%;
     padding: .75rem 1rem;
     font-size: .75rem;
+    background-color: #42b983;
+    color: #fff;
+}
+
+.steps-item.active ~ .steps-item .steps-item__num {
     background-color: #ccc;
+    color: #333;
+}
+
+.steps-item.active .steps-item__num {
+    font-weight: bold;
 }
 
 .steps-content {
     margin-bottom: 1rem;
-}
-
-.steps-item.active span,
-.steps-item.done span {
-    background-color: #42b983;
-}
-
-.steps-item.active span {
-    font-weight: bold;
-    color: #fff;
 }

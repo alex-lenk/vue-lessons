@@ -19,36 +19,28 @@
 
         <div class="steps">
             <div class="steps-content">
-                Сюда необходимо вывести текст активного шага по его индексу
+                {{ currentStep.text }}
             </div>
 
             <ul class="steps-list">
-                <li :class="currentStep" v-for="(step, idx) in steps">
-                    <span>{{ idx + 1 }}</span> {{ step.title }}
-                    {{ activeIndex }}
+                <li
+                    class="steps-item"
+                    :class="{
+                    'active': activeIndex === idx
+                }"
+                    v-for="(step, idx) in steps"
+                    :key="step"
+                >
+                    <span class="steps-item__num"
+                          @click="setActive(idx)">{{ idx + 1 }}</span> {{ step.title }}
                 </li>
-                <!--li :class="{
-                'steps-item': true,
-                 'active': idx === activeIndex
-                }" v-for="(step, idx) in steps">
-                    <span>{{ idx + 1 }}</span> {{ step.title }}
-                    {{ activeIndex }}
-                </li-->
-<!--                <li class="steps-item done">
-                    <span>2</span> Шаг 2
-                </li>
-                <li class="steps-item active">
-                    <span>3</span> Шаг 3
-                </li>
-                <li class="steps-item">
-                    <span>4</span> Шаг 4
-                </li>-->
             </ul>
 
-            <div>
-                <button class="btn">Назад</button>
-                <button class="btn primary" v-on:click="nextOfFinish">Вперед</button>
+            <div v-if="activeIndex !== 5">
+                <button class="btn" :disabled="isDisabled" v-on:click="prev">Назад</button>
+                <button class="btn primary" v-on:click="nextOfFinish">{{ nameBtn }}</button>
             </div>
+            <button class="btn" @click="reset" v-else>Начать заново</button>
         </div>
     </div>
 </div>
