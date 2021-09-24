@@ -51,8 +51,6 @@ const App = Vue.createApp({
     }
   },
   computed: {
-    // тут стоит определить несколько свойств:
-    // 1. текущий выбранный шаг
     // 2. выключена ли кнопка назад
     isDisabled() {
       return this.activeIndex === 0
@@ -62,6 +60,4 @@ const App = Vue.createApp({
       return this.steps.length - 1 === this.activeIndex
     }
   }
-});
-
-App.mount('#app')
+}).mount('#app')

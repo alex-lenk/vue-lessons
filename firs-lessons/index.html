@@ -25,9 +25,7 @@
             <ul class="steps-list">
                 <li
                     class="steps-item"
-                    :class="{
-                    'active': activeIndex === idx
-                    }"
+                    :class="{'active': activeIndex === idx}"
                     v-for="(step, idx) in steps"
                     @click="setActive(idx)"
                     :data-step="idx + 1"
@@ -40,6 +38,7 @@
                 <button class="btn" @click="prev" :disabled="isDisabled">Назад</button>
                 <button class="btn primary" @click="nextOfFinish">{{ lastStep ? 'завершить' : 'Вперед' }}</button>
             </div>
+
             <button class="btn" v-else @click="reset">начать заного</button>
         </div>
     </div>
