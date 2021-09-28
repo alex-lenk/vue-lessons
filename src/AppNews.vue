@@ -1,12 +1,27 @@
 <template>
   <div class="card">
-    <h3>{{ id }}. {{ title }} ({{ index }})</h3>
-    <button class="btn" @click="open">{{ isOpened ? 'Скрыть новость' : 'Раскрыть новость' }}</button>
-    <p v-if="isOpened">loream imsipet</p>
+    <h3>{{ title }}</h3>
+
+    <app-button @action="open">{{ isNewsOpen ? 'Скрыть новость' : 'Развернуть' }}</app-button>
+
+    <app-button @action="unmark" v-if="wasRead" :color="'danger'">отметить непрочитанной</app-button>
+
+    <div v-if="isNewsOpen">
+      <hr>
+
+      <p>loream imsipetloream imsipetloream imsipetloream imsipetloream imsipetloream imsipet</p>
+
+      <app-button @action="mark" v-if="!wasRead" color="primary">Подробнее</app-button>
+
+      <app-news-list></app-news-list>
+    </div>
   </div>
 </template>
 
 <script>
+import AppButton from './AppButton'
+import AppNewsList from './AppNewsList'
+
 export default {
   props: {
     title: {
@@ -25,14 +40,52 @@ export default {
         return value === true || value === false
       }
     },
-    index: Number
+    wasRead: Boolean
+  },
+  // emits: ['open-news'],
+  /*  emits: {
+      'open-news'(num) {
+        if (num) {
+          return true
+        }
+        console.warn("нет параметров data")
+        return false
+      }
+    }, */
+  emits: {
+    'open-news': null,
+    'read-news' (id) {
+      if (id) {
+        return true
+      }
+      console.warn('Нет id у новости')
+      return false
+    },
+    unmark: null
   },
   data () {
     return {
       isNewsOpen: this.isOpened
     }
   },
-  methods () {
+  methods: {
+    open () {
+      this.isNewsOpen = !this.isNewsOpen
+      if (this.isNewsOpen) {
+        this.$emit('open-news')
+      }
+    },
+    mark () {
+      this.isNewsOpen = false
+      this.$emit('read-news', this.id)
+    },
+    unmark () {
+      this.$emit('unmark', this.id)
+    }
+  },
+  components: {
+    AppButton,
+    AppNewsList
   }
 }
 </script>
