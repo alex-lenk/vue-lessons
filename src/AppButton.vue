@@ -8,7 +8,7 @@
 export default {
   props: {
     emits: {
-      action: 'action'
+      action: null
     },
     color: {
       type: String,

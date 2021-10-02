@@ -79,8 +79,8 @@ export default {
 }
 </script>
 
-<style scoped>
-h2 {
-  color: #c25205;
+<style>
+[v-cloak] {
+  display: none;
 }
 </style>
