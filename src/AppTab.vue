@@ -1,6 +1,8 @@
 <template>
   <div class="container" v-cloak>
     <div class="card">
+      <app-async-component></app-async-component>
+
       <h2>Динамические и исинхронные приложения</h2>
 
       <app-button
@@ -27,6 +29,7 @@
 import AppButton from './AppButton'
 import AppTextOne from './AppTextOne'
 import AppTextTwo from './AppTextTwo'
+import AppAsyncComponent from './AppAsyncComponent'
 
 export default {
   data () {
@@ -34,14 +37,27 @@ export default {
       active: 'one' // two
     }
   },
+  mounted () {
+    setTimeout(() => {
+      this.tabExample = 'New name'
+    }, 1500)
+  },
   computed: {
-    tabExample () {
-      /*      if (this.active === 'one') {
-              return 'app-text-one'
-            } else {
-              return 'app-text-two'
-            } */
-      return 'app-text-' + this.active
+    /*    tabExample() {
+          //if (this.active === 'one') {
+            //return 'app-text-one'
+          //} else {
+            //return 'app-text-two'
+          //}
+          return 'app-text-' + this.active
+        }, */
+    tabExample: {
+      get () {
+        return 'app-text-' + this.active
+      },
+      set (value) {
+        console.log('Component name' + value)
+      }
     },
     tabOneColor () {
       return this.active === 'one' ? 'primary' : ''
@@ -51,6 +67,7 @@ export default {
     }
   },
   components: {
+    AppAsyncComponent,
     AppButton,
     AppTextOne,
     AppTextTwo

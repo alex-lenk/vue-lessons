@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'AppNewsList',
+  name: 'AppOtherNews',
   inject: ['title', 'news']
 }
 </script>

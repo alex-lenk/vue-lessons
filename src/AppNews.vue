@@ -1,91 +1,78 @@
 <template>
   <div class="card">
-    <h3>{{ title }}</h3>
+    <h2>Актуальные новости на {{ localeDate }}</h2>
 
-    <app-button @action="open">{{ isNewsOpen ? 'Скрыть новость' : 'Развернуть' }}</app-button>
-
-    <app-button @action="unmark" v-if="wasRead" :color="'danger'">отметить непрочитанной</app-button>
-
-    <div v-if="isNewsOpen">
-      <hr>
-
-      <p>loream imsipetloream imsipetloream imsipetloream imsipetloream imsipetloream imsipet</p>
-
-      <app-button @action="mark" v-if="!wasRead" color="primary">Подробнее</app-button>
-
-      <app-news-list></app-news-list>
-    </div>
+    Открыто новостей: <strong>{{ openRate }}</strong> |
+    Прочитатно новостей: <strong>{{ readRate }}</strong>
   </div>
+
+  <app-news-item
+    v-for="item in news"
+    :key="item.id"
+    :title="item.title"
+    :id="item.id"
+    :is-opened="item.isOpened"
+    :was-read="item.wasRead"
+    @open-news="openNews"
+    @read-news="readNews"
+    @unmark="unreadNews"
+  ></app-news-item>
 </template>
 
 <script>
-import AppButton from './AppButton'
-import AppNewsList from './AppNewsList'
+import AppNewsItem from './AppNewsItem'
 
 export default {
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    id: {
-      type: Number,
-      required: true
-    },
-    isOpened: {
-      type: Boolean,
-      required: false,
-      default: false,
-      validator (value) {
-        return value === true || value === false
-      }
-    },
-    wasRead: Boolean
-  },
-  // emits: ['open-news'],
-  /*  emits: {
-      'open-news'(num) {
-        if (num) {
-          return true
-        }
-        console.warn("нет параметров data")
-        return false
-      }
-    }, */
-  emits: {
-    'open-news': null,
-    'read-news' (id) {
-      if (id) {
-        return true
-      }
-      console.warn('Нет id у новости')
-      return false
-    },
-    unmark: null
-  },
   data () {
     return {
-      isNewsOpen: this.isOpened
+      openRate: 0,
+      readRate: 0,
+      localeDate: new Date().toLocaleDateString(),
+      news: [
+        {
+          title: 'Первое беспилотное такси в России',
+          id: 1,
+          isOpened: false,
+          wasRead: false
+        },
+        {
+          title: 'В мире прекратили продажу этилированного бензина',
+          id: 2,
+          isOpened: false,
+          wasRead: false
+        },
+        {
+          title: 'Грибы защитят космонавтов от радиации',
+          id: 3,
+          isOpened: false,
+          wasRead: false
+        }
+      ]
+    }
+  },
+  provide () {
+    return {
+      title: 'Список новостей',
+      news: this.news
     }
   },
   methods: {
-    open () {
-      this.isNewsOpen = !this.isNewsOpen
-      if (this.isNewsOpen) {
-        this.$emit('open-news')
-      }
+    openNews () {
+      this.openRate++
     },
-    mark () {
-      this.isNewsOpen = false
-      this.$emit('read-news', this.id)
+    readNews (id) {
+      const idx = this.news.findIndex(news => news.id === id)
+      this.news[idx].wasRead = true
+      this.readRate++
     },
-    unmark () {
-      this.$emit('unmark', this.id)
+    unreadNews (id) {
+      const news = this.news.find(news => news.id === id)
+      news.wasRead = false
+      this.readRate--
     }
   },
   components: {
-    AppButton,
-    AppNewsList
+    'app-news-item': AppNewsItem
   }
 }
 </script>
