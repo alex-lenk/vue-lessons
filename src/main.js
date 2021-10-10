@@ -1,12 +1,5 @@
-import { createApp, defineAsyncComponent } from 'vue'
-import './theme.css'
+import { createApp } from 'vue'
 import App from './App.vue'
+import './theme.css'
 
-const app = createApp(App)
-
-// Global Components
-app.component('async-component', defineAsyncComponent(() => {
-  return import('./AppAsyncComponent')
-}))
-
-app.mount('#app')
+createApp(App).mount('#app')
