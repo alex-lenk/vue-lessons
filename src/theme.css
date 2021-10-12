@@ -105,6 +105,14 @@ h3 {
     box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 1!important;
+    background: #eee!important;
+    border-color: #ddd!important;
+    color: #999!important;
+}
+
 .btn.primary {
     background: #42b983;
     color: #fff;
