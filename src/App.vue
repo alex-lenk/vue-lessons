@@ -13,7 +13,7 @@
 
     <app-people-list
       :people="people"
-      @load="peopleLoad"
+      @load="loadPeople"
     ></app-people-list>
   </div>
 </template>
@@ -32,10 +32,6 @@ export default {
     }
   },
   methods: {
-    async peopleLoad () {
-      await axios.get(this.urlBase
-      )
-    },
     async createdPerson () {
       const response = await fetch(this.urlBase, {
         method: 'POST',
@@ -52,6 +48,16 @@ export default {
       console.log(firebaseData)
 
       this.name = ''
+    },
+    async loadPeople () {
+      const { data } = await axios.get(this.urlBase)
+      this.people = Object.keys(data).map(key => {
+        return {
+          id: key,
+          // firstName: data[key].firstName
+          ...data[key]
+        }
+      })
     }
   },
   components: { AppButton, AppPeopleList }
