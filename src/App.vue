@@ -7,9 +7,13 @@
         <label for="name">Имя</label>
         <input type="text" id="name" v-model.trim="name">
       </div>
-
       <app-button class="primary" :disabled="name.length < 2">создать пользователя</app-button>
     </form>
+
+    <aside class="card">
+      Количество людей в базе данных:
+      {{ people.length }}
+    </aside>
 
     <app-people-list
       :people="people"
@@ -31,6 +35,9 @@ export default {
       people: []
     }
   },
+  mounted () {
+    this.loadPeople()
+  },
   methods: {
     async createdPerson () {
       const response = await fetch(this.urlBase, {
@@ -41,11 +48,15 @@ export default {
         body: JSON.stringify({
           firstName: this.name
         })
+
       })
 
-      const firebaseData = await response.json
+      const firebaseData = await response.json()
 
-      console.log(firebaseData)
+      this.people.push({
+        firstName: this.name,
+        id: firebaseData.name
+      })
 
       this.name = ''
     },
