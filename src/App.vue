@@ -1,120 +1,70 @@
 <template>
-  <div class="container" v-cloak>
-    <app-alert :alert="alert" @close="alert = null"></app-alert>
-    <form class="card" @submit.prevent="createdPerson">
-      <h1>Работа с базой данных</h1>
+  <div class="container column">
+    <form class="card card-w30">
+      <div class="form-control">
+        <label for="type">Тип блока</label>
+        <select id="type">
+          <option value="title">Заголовок</option>
+          <option value="subtitle">Подзаголовок</option>
+          <option value="avatar">Аватар</option>
+          <option value="text">Текст</option>
+        </select>
+      </div>
 
       <div class="form-control">
-        <label for="name">Имя</label>
-        <input type="text" id="name" v-model.trim="name">
+        <label for="value">Значение</label>
+        <textarea id="value" rows="3"></textarea>
       </div>
-      <app-button class="primary" :disabled="name.length < 2">создать пользователя</app-button>
+
+      <button class="btn primary">Добавить</button>
     </form>
 
-    <aside class="card">
-      Количество людей в базе данных:
-      {{ people.length }}
-    </aside>
-
-    <app-loader v-if="loading"/>
-
-    <app-people-list
-      v-else
-      :people="people"
-      @load="loadPeople"
-      @remove="removePerson"
-    />
+    <div class="card card-w70">
+      <h1>Резюме Nickname</h1>
+      <div class="avatar">
+        <img src="https://cdn.dribbble.com/users/5592443/screenshots/14279501/drbl_pop_r_m_rick_4x.png">
+      </div>
+      <h2>Опыт работы</h2>
+      <p>
+        главный герой американского мультсериала «Рик и Морти», гениальный учёный, изобретатель, атеист (хотя в некоторых сериях он даже молится Богу, однако, каждый раз после чудесного спасения ссылается на удачу и вновь отвергает его существование), алкоголик, социопат, дедушка Морти. На момент начала третьего сезона ему 70 лет[1]. Рик боится пиратов, а его главной слабостью является некий - "Санчезиум". Исходя из того, что существует неограниченное количество вселенных, существует неограниченное количество Риков, герой сериала предположительно принадлежит к измерению С-137. В серии комикcов Рик относится к измерению C-132, а в игре «Pocket Mortys» — к измерению C-123[2]. Прототипом Рика Санчеза является Эмметт Браун, герой кинотрилогии «Назад в будущее»[3].
+      </p>
+      <h3>Добавьте первый блок, чтобы увидеть результат</h3>
+    </div>
+  </div>
+  <div class="container">
+    <p>
+      <button class="btn primary">Загрузить комментарии</button>
+    </p>
+    <div class="card">
+      <h2>Комментарии</h2>
+      <ul class="list">
+        <li class="list-item">
+          <div>
+            <p><strong>test@microsoft.com</strong></p>
+            <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, reiciendis.</small>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="loader"></div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import AppButton from './AppButton'
-import AppPeopleList from './AppPeopleList'
-import AppAlert from './AppAlert'
-import AppLoader from './AppLoader'
-
 export default {
-  data () {
-    return {
-      name: '',
-      urlBase: 'https://vue-with-http-68465-default-rtdb.europe-west1.firebasedatabase.app/people.json',
-      people: [],
-      alert: null,
-      loading: true
-    }
-  },
-  mounted () {
-    this.loadPeople()
-  },
-  methods: {
-    async createdPerson () {
-      const response = await fetch(this.urlBase, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: this.name
-        })
 
-      })
-
-      const firebaseData = await response.json()
-
-      this.people.push({
-        firstName: this.name,
-        id: firebaseData.name
-      })
-
-      this.name = ''
-    },
-    async loadPeople () {
-      try {
-        // this.loading = true
-        const { data } = await axios.get(this.urlBase)
-
-        if (!data) {
-          throw new Error('Список людей пуск, заполните его.')
-        }
-
-        this.people = Object.keys(data).map(key => {
-          return {
-            id: key,
-            // firstName: data[key].firstName
-            ...data[key]
-          }
-        })
-
-        this.loading = false
-      } catch (e) {
-        this.alert = {
-          type: 'danger',
-          title: 'Ошибка!',
-          text: e.message
-        }
-        this.loading = false
-      }
-    },
-    async removePerson (id) {
-      try {
-        const name = this.people.find(person => person.id === id).firstName
-        await axios.delete(`https://vue-with-http-68465-default-rtdb.europe-west1.firebasedatabase.app/people/${id}.json`)
-        this.people = this.people.filter(person => person.id !== id)
-
-        this.alert = {
-          type: 'primary',
-          title: 'Пользователь удален!',
-          text: `Человек с именем ${name} успешно удален!`
-        }
-      } catch (e) {
-      }
-    }
-  },
-  components: { AppButton, AppPeopleList, AppAlert, AppLoader }
 }
 </script>
 
 <style>
+  .avatar {
+    display: flex;
+    justify-content: center;
+  }
 
+  .avatar img {
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+  }
 </style>
