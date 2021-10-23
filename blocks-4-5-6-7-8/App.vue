@@ -57,7 +57,6 @@ export default {
         body: JSON.stringify({
           firstName: this.name
         })
-
       })
 
       const firebaseData = await response.json()

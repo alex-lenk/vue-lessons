@@ -130,7 +130,7 @@ h3 {
     max-width: 1000px;
 }
 
-.container.column {
+.column {
     display: flex;
 }
 

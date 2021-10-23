@@ -1,6 +1,9 @@
 <template>
   <div v-if="people.length !== 0">
-    <div class="card d-flex" v-for="person in people" :key="person.id">
+    <div class="card d-flex"
+         v-for="person in people"
+         :key="person.id"
+    >
       <h4>{{ person.firstName }}</h4>
 
       <app-button class="danger" @click="$emit('remove', person.id)">удалить</app-button>
