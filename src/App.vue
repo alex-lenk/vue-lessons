@@ -1,15 +1,19 @@
 <template>
-  <div class="container" v-cloak>
-    <div class="card">
-    </div>
+  <div class="container with-nav">
   </div>
 </template>
 
 <script>
+
 export default {
   data() {
-    return {}
+    return {
+    }
   },
-  methods: {}
+  methods: {
+  }
 }
 </script>
+
+<style>
+</style>
