@@ -1,20 +1,22 @@
-import {createStore} from 'vuex'
-
-export default createStore({
+export default {
+  namespaced: true,
   state() {
     return {
-      counter: 0
+      counter: 1
     }
   },
   mutations: {
+    increment(state) {
+      state.counter++
+    },
     add(state, payload) {
       state.counter += payload.value
     }
   },
   actions: {
-    addAsync(context, payload) {
+    incrementAsync({ commit }, payload) {
       setTimeout(() => {
-        context.commit('add', payload)
+        commit('add', payload)
       }, payload.delay)
     }
   },
@@ -23,8 +25,8 @@ export default createStore({
       //if (state.counter > 20) return state.counter + 'шт.'
       return state.counter
     },
-    doubleCounter(_, getters) {
+    doubleCounter(_, getters, getRoot, stateRoot) {
       return getters.counter * 2
     }
   }
-})
+}
