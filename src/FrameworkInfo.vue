@@ -65,6 +65,38 @@ export default {
             version: framework.version,*/
       //framework: framework,
     }
+    /*
+    const framework = ref({
+      name: ref('VueJs'),
+      version: ref(3)
+    })
+
+    function changeInfo() {
+      console.log(framework.value.name)
+      console.log(framework.value.version)
+      framework.value.name = 'Vue JS!'
+      framework.value.version = 4
+    }
+
+    return {
+      name: framework.value.name,
+      version: framework.value.version,
+      framework: framework,
+      change: changeInfo
+    }
+    * */
   }
+  /*  data() {
+      return {
+        name: 'VueJS',
+        version: 3
+      }
+    },
+    methods: {
+      changeInfo() {
+        this.name = 'Vue JS!'
+        this.version = 4
+      }
+    }*/
 }
 </script>
