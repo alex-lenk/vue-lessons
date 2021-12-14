@@ -7,34 +7,25 @@
 
       <small>data, methods, computed, watch</small>
 
-      <hr>
-
-      <p>
-        Название: <strong>{{ name }}</strong>
-      </p>
-
-      <p>
-        Версия: <strong>{{ version }} ({{ doubleVersion }})</strong>
-      </p>
-
       <div class="form-control">
-<!--        <input type="text" ref="textInput">-->
         <input type="text" v-model="firstName">
       </div>
 
       <button class="btn" @click="change">Изменить</button>
     </div>
+
+    <frameworkInfo :name="name" :version="version" @change-version="changeVersion" />
   </div>
 </template>
 
 <script>
 import {ref, reactive, toRefs, isRef, isReactive, computed, watch} from 'vue'
+import FrameworkInfo from './FrameworkInfo'
 
 export default {
   setup() {
     const name = ref('VueJs')
     const version = ref(3)
-    const textInput = ref(null)
     const firstName = ref('')
 
     const framework = reactive({
@@ -42,13 +33,10 @@ export default {
       version: 3
     })
 
-    const doubleVersion = computed(() => version.value * 2)
+    //const doubleVersion = computed(() => version.value * 2)
 
-    watch([doubleVersion, name], (newValue, oldValue) => {
-      console.log('new version: ', newValue[0])
-      console.log('new name: ', newValue[1])
-      console.log('old version: ', oldValue[0])
-      console.log('old name: ', oldValue[1])
+    watch(firstName, (newValue) => {
+      console.log(newValue)
     })
 
     function changeInfo() {
@@ -56,15 +44,18 @@ export default {
       version.value = 4
     }
 
-    return {
-      name: name,
-      version: version,
-      change: changeInfo,
-      doubleVersion
-      /*      name: framework.name,
-            version: framework.version,*/
-      //framework: framework,
+    function changeVersion(nub) {
+      version.value = nub
     }
-  }
+
+    return {
+      name,
+      version,
+      change: changeInfo,
+      firstName: firstName,
+      changeVersion
+    }
+  },
+  components: {FrameworkInfo}
 }
 </script>
