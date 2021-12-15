@@ -9,6 +9,9 @@
       <li>
         <router-link to="/reusable">Переиспользовать</router-link>
       </li>
+      <li>
+        <router-link to="/vuex">Vuex Page</router-link>
+      </li>
     </ul>
   </header>
 

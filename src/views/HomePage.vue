@@ -1,4 +1,10 @@
 <template>
+  <appAlert
+    v-if="simpleAlert"
+    title="it is work"
+    type="danger"
+    @close="close"
+  />
   <div class="card">
     <h1>
       Vue Composition Api
@@ -11,6 +17,8 @@
     </div>
 
     <button class="btn" @click="change">Изменить</button>
+
+    <button class="btn danger" @click="toggle">{{ simpleAlert ? 'закрыть' : 'показать'}} сообщение</button>
   </div>
 
       <FrameworkInfo
@@ -22,12 +30,15 @@
 </template>
 
 <script>
-import FrameworkInfo from '../FrameworkInfo';
 import {provide, reactive, ref, watch} from 'vue';
+import AppAlert from "../AppAlert";
+import FrameworkInfo from '../FrameworkInfo';
+import {useAlert} from "../use/alert";
 
 export default {
-  components: {FrameworkInfo},
+  components: {FrameworkInfo, AppAlert},
   setup() {
+    const {alert: simpleAlert, close, toggle} = useAlert()
     const name = ref('VueJs')
     const version = ref(3)
     const firstName = ref('')
@@ -58,7 +69,10 @@ export default {
     return {
       change: changeInfo,
       firstName: firstName,
-      changeVersion
+      changeVersion,
+      toggle,
+      close,
+      simpleAlert
     }
   },
   name: "HomePage"
