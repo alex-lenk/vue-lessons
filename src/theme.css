@@ -148,7 +148,9 @@ h3 {
 }
 
 .form-control input,
-.form-control select {
+.form-control select,
+.form-control textarea{
+    font-family: Inter, Roboto, Oxygen, Fira Sans, Helvetica Neue, sans-serif;
     margin: 0;
     outline: none;
     border: 2px solid #ccc;
@@ -158,6 +160,7 @@ h3 {
     padding: 0.5rem 1.5rem;
     border-radius: 3px;
     font-size: 1rem;
+    resize: none;
 }
 
 .form-control small {
@@ -393,4 +396,40 @@ h3 {
 
 .navbar-menu li a:hover, .navbar-menu li a.active {
     border-bottom: 2px solid #3eaf7c;
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge {
+    font-size: 0.8rem;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 0 .5rem;
+}
+
+.badge.primary {
+    border-color: #3eaf7c;
+    color: #3eaf7c;
+}
+
+.badge.danger {
+    border-color: #e53935;
+    color: #e53935;
+}
+
+.badge.warning {
+    border-color: #c25205;
+    color: #c25205;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-white.center {
+    text-align: center;
 }
