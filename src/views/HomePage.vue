@@ -1,66 +1,77 @@
 <template>
-  <appAlert
-    v-if="simpleAlert"
-    title="it is work"
-    type="danger"
-    @close="close"
-  />
+<!--  <app-alert-->
+<!--      v-if="alert"-->
+<!--      title="Работаем с Composition"-->
+<!--      type="danger"-->
+<!--      @close="close"-->
+<!--  ></app-alert>-->
+
   <div class="card">
-    <h1>
-      Vue Composition Api
-    </h1>
-
+    <h1>Vue Composition Api</h1>
     <small>data, methods, computed, watch</small>
-
     <div class="form-control">
       <input type="text" v-model="firstName">
     </div>
 
     <button class="btn" @click="change">Изменить</button>
-
-    <button class="btn danger" @click="toggle">{{ simpleAlert ? 'закрыть' : 'показать'}} сообщение</button>
   </div>
 
-      <FrameworkInfo
-        :name="name"
-        :version="version"
-        @change-version="changeVersion"
-      />
-
+  <FrameworkInfo
+      @change-version="changeVersion"
+      class="test-from-app"
+  >
+    <template>
+      <p>This is footer</p>
+    </template>
+  </FrameworkInfo>
 </template>
 
 <script>
-import {provide, reactive, ref, watch} from 'vue';
-import AppAlert from "../AppAlert";
-import FrameworkInfo from '../FrameworkInfo';
-import {useAlert} from "../use/alert";
+import {onBeforeMount, onBeforeUpdate, onMounted, onUpdated, provide, reactive, ref, watch} from 'vue'
+import FrameworkInfo from '../FrameworkInfo'
+import AppAlert from '../AppAlert'
 
 export default {
-  components: {FrameworkInfo, AppAlert},
   setup() {
-    const {alert: simpleAlert, close, toggle} = useAlert()
-    const name = ref('VueJs')
+    const name = ref('VueJS')
     const version = ref(3)
+    const textInput = ref(null)
     const firstName = ref('')
 
     const framework = reactive({
-      name: 'VueJs',
+      name: 'VueJS',
       version: 3
     })
 
-    //const doubleVersion = computed(() => version.value * 2)
+    console.log('created')
 
-    watch(firstName, (newValue) => {
-      console.log(newValue)
+    onBeforeMount(() => {
+      console.log('onBeforeMount')
+    })
+
+    onMounted(() => {
+      console.log('onMounted')
+    })
+
+    onBeforeUpdate(() => {
+      console.log('onBeforeUpdate')
+    })
+
+    onUpdated(() => {
+      console.log('onUpdated')
+    })
+
+    watch(firstName, (newV, oldV) => {
+      console.log(newV)
     })
 
     function changeInfo() {
-      name.value = 'Vue JS!'
-      version.value = 4
+      name.value = 'Vue JS !'
+      version.value = 42
     }
 
-    function changeVersion(nub) {
-      version.value = nub
+    function changeVersion(num) {
+      version.value = num
     }
 
     provide('name', name)
@@ -68,13 +79,14 @@ export default {
 
     return {
       change: changeInfo,
-      firstName: firstName,
-      changeVersion,
-      toggle,
-      close,
-      simpleAlert
+      firstName,
+      changeVersion
     }
   },
-  name: "HomePage"
+  components: {FrameworkInfo, AppAlert}
 }
 </script>
+
+<style scoped>
+
+</style>

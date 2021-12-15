@@ -14,7 +14,8 @@ export default {
     return {
       appTitle: store.getters.appTitle.toUpperCase()
     }
-  }
+  },
+  name: "VuexPage"
 }
 </script>
 

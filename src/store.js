@@ -1,14 +1,14 @@
-import {createStore} from "vuex";
+import {createStore} from 'vuex'
 
 export const store = createStore({
   state() {
     return {
-      appTitle: 'This is    VUEX     '
+      title: 'This is Vuex + Composition     '
     }
   },
   getters: {
-    appTitle(state){
-      return state.appTitle.trim()
+    appTitle(state) {
+      return state.title.trim()
     }
   }
 })
