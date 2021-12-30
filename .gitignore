@@ -16,9 +16,6 @@ pnpm-debug.log*
 # Editor directories and files
 .idea
 .vscode
-.firebase
-.firebaserc
-firebase.json
 *.suo
 *.ntvs*
 *.njsproj
@@ -26,3 +23,6 @@ firebase.json
 *.sw?
 *.iml
 package-lock.json
+.firebase
+.firebaserc
+firebase.json

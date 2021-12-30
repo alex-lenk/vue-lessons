@@ -28,7 +28,7 @@ import axios from 'axios'
 
 export default {
   setup () {
-    const { urlBase, task: tasksGeneral } = useGeneral()
+    const { task: tasksGeneral } = useGeneral()
     const tasks = ref([])
     const inputTitle = ref('')
     const inputDate = ref('')
@@ -37,6 +37,12 @@ export default {
     const validateForm = computed(() => {
       return inputTitle.value.length && inputDate.value.length && textareaDesc.value.length > 3
     })
+
+    function submitHandler () {
+
+    }
+
+/*
 
     async function submitHandler () {
       const response = await fetch(urlBase.value, {
@@ -95,13 +101,14 @@ export default {
       }
     }
 
+
     onMounted(loadTasks)
 
     console.log(loadTasks)
-    console.log(tasks.value._value)
-
+    //console.log(tasks.value)
+    */
     return {
-      urlBase,
+      //urlBase,
       tasksGeneral,
       tasks,
       inputTitle,
@@ -109,7 +116,7 @@ export default {
       textareaDesc,
       validateForm,
       submitHandler,
-      loadTasks
+      // loadTasks
     }
   }
 }
