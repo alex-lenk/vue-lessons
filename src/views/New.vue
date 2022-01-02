@@ -1,20 +1,20 @@
 <template>
-  <form class="card" @submit.prevent="submitHandler">
+  <form class="card" @submit.prevent="submitTask">
     <h1>Создать новую задачу</h1>
 
     <div class="form-control">
       <label for="title">Название</label>
-      <input type="text" id="title" v-model="inputTitle">
+      <input type="text" id="title" v-model="title">
     </div>
 
     <div class="form-control">
       <label for="date">Дата дэдлайна</label>
-      <input type="date" id="date" v-model="inputDate">
+      <input type="date" id="date" v-model="date">
     </div>
 
     <div class="form-control">
       <label for="description">Описание</label>
-      <textarea id="description" v-model="textareaDesc"></textarea>
+      <textarea id="description" v-model="description"></textarea>
     </div>
 
     <button class="btn primary" :disabled="!validateForm" type="submit">Создать</button>
@@ -22,101 +22,63 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
-import { useGeneral } from '../use/general'
-import axios from 'axios'
+import {ref, computed, onMounted} from 'vue'
+import {useStore} from 'vuex'
+// import {useGeneral} from '../use/general'
+// import axios from 'axios'
 
 export default {
-  setup () {
-    const { task: tasksGeneral } = useGeneral()
+  setup() {
+    const title = ref('')
+    const date = ref(null)
+    const description = ref('')
     const tasks = ref([])
-    const inputTitle = ref('')
-    const inputDate = ref('')
-    const textareaDesc = ref('')
 
     const validateForm = computed(() => {
-      return inputTitle.value.length && inputDate.value.length && textareaDesc.value.length > 3
+      return title.value !== '' && date.value && description.value !== ''
     })
 
-    function submitHandler () {
+    function submitTask() {
+      tasks.value.push([title.value, date.value, description.value])
 
+      title.value = ''
+      date.value = ''
+      description.value = ''
+
+      saveTasks();
     }
 
-/*
-
-    async function submitHandler () {
-      const response = await fetch(urlBase.value, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          title: inputTitle.value,
-          data: inputDate.value,
-          text: textareaDesc.value
-        })
-      })
-
-      const firebaseData = await response.json()
-
-      tasks.value.push({
-        id: firebaseData.inputTitle,
-        title: inputTitle.value,
-        data: inputDate.value,
-        text: textareaDesc.value
-      })
-
-      inputTitle.value = ''
-      inputDate.value = ''
-      textareaDesc.value = ''
+    function saveTasks() {
+      let parsed = JSON.stringify(tasks.value);
+      localStorage.setItem('task', parsed);
     }
 
-    const loadTasks = async () => {
-      try {
-        // this.loading = true
-        const { data } = await axios.get(urlBase.value)
-
-        if (!data) {
-          console.log('Список людей пуск, заполните его.')
-          throw new Error('Список людей пуск, заполните его.')
-        }
-
-        tasks.value = Object.keys(data).map(key => {
-          return {
-            id: key,
-            // firstName: data[key].firstName
-            ...data[key]
-          }
-        })
-
-        // this.loading = false
-      } catch (e) {
-        console.log('catch')
-        // this.alert = {
-        //   type: 'danger',
-        //   title: 'Ошибка!',
-        //   text: e.message
-        // }
-        // this.loading = false
+    function loadTasks() {
+      if (localStorage.getItem('task')) {
+        tasks.value = JSON.parse(localStorage.getItem('task'));
       }
+      console.log(tasks.value)
+      /*
+      if (localStorage.getItem('tasks')) {
+        try {
+        } catch (e) {
+          localStorage.removeItem('tasks');
+        }
+      }
+    * */
     }
 
+    onMounted(() => loadTasks())
 
-    onMounted(loadTasks)
-
-    console.log(loadTasks)
-    //console.log(tasks.value)
-    */
     return {
-      //urlBase,
-      tasksGeneral,
+      title,
+      date,
+      description,
       tasks,
-      inputTitle,
-      inputDate,
-      textareaDesc,
       validateForm,
-      submitHandler,
-      // loadTasks
+      submitTask,
+      loadTasks,
+      saveTasks
     }
   }
 }
