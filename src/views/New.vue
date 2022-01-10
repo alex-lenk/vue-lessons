@@ -22,63 +22,41 @@
 </template>
 
 <script>
-import {ref, computed, onMounted} from 'vue'
+import {ref, computed} from 'vue'
 import {useStore} from 'vuex'
-// import {useGeneral} from '../use/general'
-// import axios from 'axios'
+import {useRouter} from 'vue-router'
 
 export default {
   setup() {
+    const store = useStore()
+    const router = useRouter()
     const title = ref('')
     const date = ref(null)
     const description = ref('')
-    const tasks = ref([])
 
     const validateForm = computed(() => {
       return title.value !== '' && date.value && description.value !== ''
     })
 
     function submitTask() {
-      tasks.value.push([title.value, date.value, description.value])
-
-      title.value = ''
-      date.value = ''
-      description.value = ''
-
-      saveTasks();
-    }
-
-    function saveTasks() {
-      let parsed = JSON.stringify(tasks.value);
-      localStorage.setItem('task', parsed);
-    }
-
-    function loadTasks() {
-      if (localStorage.getItem('task')) {
-        tasks.value = JSON.parse(localStorage.getItem('task'));
+      const newTask = {
+        id: Date.now().toString(),
+        title: title.value,
+        date: date.value,
+        description: description.value,
+        status: 'active'
       }
-      console.log(tasks.value)
-      /*
-      if (localStorage.getItem('tasks')) {
-        try {
-        } catch (e) {
-          localStorage.removeItem('tasks');
-        }
-      }
-    * */
-    }
 
-    onMounted(() => loadTasks())
+      store.dispatch('createTask', newTask)
+      router.push('/')
+    }
 
     return {
       title,
       date,
       description,
-      tasks,
-      validateForm,
       submitTask,
-      loadTasks,
-      saveTasks
+      validateForm
     }
   }
 }
