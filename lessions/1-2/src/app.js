@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 Vue.createApp({
   data() {
     return {

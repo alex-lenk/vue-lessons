@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <div class="card">
+            <h1 :style="{color: inputValue.length < 3 ? 'darkred' : 'red'}">{{ title }}</h1>
+
+            <div class="form-control">
+                <input type="text"
+                       :placeholder="placeholder"
+                       v-model="inputValue"
+                       @keypress.enter="addInputValue">
+            </div>
+
+            <h2>{{ inputValue }}</h2>
+
+            <button class="btn primary" @click="addInputValue">отправить</button>
+
+            <hr>
+
+            <ul class="list" v-if="notes.length !== 0">
+                <li class="list-item" v-for="(item, idx) in notes">
+<!--                    <span v-bind:class="item.length > 5 ? 'bold' : 'text primary'">
+                    <span v-bind:class="{
+                        'text primary': true,
+                        'bold': item.length > 5
+                    }">-->
+                    <span v-bind:class="['bold', {'text primary': item.length > 5}]">
+                        ({{ idx }}).
+                        {{ toUppercase(item) }}
+                    </span>
+                    <button class="btn danger" @click="deleteCurrentNote(idx)">удалить</button>
+                </li>
+                <li class="list-item">
+                    <div>
+                        <hr>
+                        <strong>общее количество записей: {{notes.length}}</strong> ||
+                        Умноженное на два: {{doubleCounts}}
+                    </div>
+                </li>
+            </ul>
+
+            <div v-else>заметок нет</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="theme.css"/>
+</head>
+<body>
+<div id="app" v-cloak>
+    <div class="container">
+        <div class="card center">
+            <!--
+            <div v-html="html"></div>
+            <h1 v-text="title"></h1>
+            <h2 v-once>{{ title }}</h2>
+            <h2 v-pre>{{ title }}</h2>
+
+            <button class="btn primary" @click="title = 'New title'">change</button>
+            -->
+
+            <div class="form-control" >
+                <input type="text" @keyup.enter="addValue" ref="myField">
+            </div>
+
+            <hr>
+
+            <ul class="list" v-if="items.length">
+                <li class="list-item"
+                    v-for="(item, idx) in items"
+                    @click="remove(idx), log(item)"
+                    :key="item">
+                    <div>{{ idx}}). {{ item }}</div>
+                    <div class="form-control" @click.stop><input type="text"></div>
+                </li>
+                <!--
+                <li class="list-item" v-for="(item, idx) in 9">
+                    {{ idx }}.
+                    {{ item }}
+                </li>
+                <li class="list-item" v-for="(item, key, idx) in person">
+                    <div>
+                        {{ idx}}. <strong>{{ key }}</strong> {{ item }}
+                    </div>
+                </li>
+                <li class="list-item"
+                    v-for="(item, idx) in items"
+                    @click="remove(idx)">
+                    <div>
+                        {{ idx}}). {{ item }}
+                    </div>
+                </li>
+                <li class="list-item"
+                    v-for="(item, idx) in evenItems"
+                    @click="remove(idx)"
+                    :key="item">
+                    <div>
+                        {{ idx}}). {{ item }}
+                    </div>
+                    <div class="form-control" @click.stop><input type="text"></div>
+                </li>
+                -->
+            </ul>
+
+            <div v-show="items.length === 0">Информации нет, зайдите позже</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3"></script>
+<script src="app.js"></script>
+</body>
+</html>
