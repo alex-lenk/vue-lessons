@@ -1,15 +1,25 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <div class="card">
+      <theHeader/>
+      <h2>Fresh news {{dataNow}}</h2>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TheHeader from "@/components/TheHeader";
 
 export default {
+  data: () => ({
+    dataNow: new Date().toLocaleDateString(),
+    news: [
+      ''
+    ]
+  }),
   name: 'App',
   components: {
-    HelloWorld
+    TheHeader
   }
 }
 </script>
